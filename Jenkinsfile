@@ -12,6 +12,11 @@ pipeline {
                     numToKeepStr: '10'
             )
     }
+    stage(build){
+        stage("run test") {
+            bzt "stess_test.yml -report"
+        } 
+    }
 
     stages {
         
