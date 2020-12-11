@@ -23,26 +23,10 @@ pipeline {
                 """
             }
         }
-        
-        stage('Build') {
-      // Run the Taurus build
-        }
-    stage('Performance Tests') {
-    parallel(
-        BlazeMeterTest: {
-            dir ('Taurus-Repo') {
-                sh 'bzt stress_test.yml -report'
-            }
-        },
-        Analysis: {
-            sleep 60
-        })
-   }
-
-   stage(‘Deploy’) {
-       
-   }
-        
+    
+       stage("run test") {
+        bzt "stess_test.yml -report"
+    } 
     stage(' Unit Testing') {
             steps {
                 sh """
