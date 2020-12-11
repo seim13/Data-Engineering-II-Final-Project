@@ -1,4 +1,4 @@
-pipeline{
+
   node {
    stage('Build') {
       // Run the Taurus build
@@ -18,4 +18,4 @@ pipeline{
    stage(‘Deploy’) {
    }
   }
-}
+
