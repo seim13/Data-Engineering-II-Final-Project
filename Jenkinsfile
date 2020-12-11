@@ -31,7 +31,7 @@ pipeline {
     parallel(
         BlazeMeterTest: {
             dir ('Taurus-Repo') {
-                sh 'bzt <file_name>.yml -report'
+                sh 'bzt stress_test.yml -report'
             }
         },
         Analysis: {
