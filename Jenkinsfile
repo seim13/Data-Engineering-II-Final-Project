@@ -46,5 +46,4 @@ pipeline{
 	      echo 'suppose to down docker'
       }
     }
-  }
 }
