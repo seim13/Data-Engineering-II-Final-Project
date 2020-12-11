@@ -20,15 +20,20 @@ pipeline{
    }
 	  
    stage('Performance Tests') {
-    parallel(
-        BlazeMeterTest: {
-            dir ('Taurus-Repo') {
-                sh 'bzt stress_test.yml -report'
-            }
-        },
-        Analysis: {
-            sleep 60
-        })
+	   parallel{
+		   stage('Activation'){
+        		BlazeMeterTest: {
+            			dir ('Taurus-Repo') {
+                			sh 'bzt stress_test.yml -report'
+            					}
+					} 
+		   	}
+		   stage('analys'){
+        		Analysis: {
+            			sleep 60
+        			}
+	   		}
+	   }
    }
 	  
     stage('Docker images down'){
