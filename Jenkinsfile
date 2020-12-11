@@ -24,9 +24,11 @@ pipeline {
             }
         }
     
-       stage("run test") {
-        bzt "stess_test.yml -report"
-    } 
+        stage(build){
+        stage("run test") {
+            bzt "stess_test.yml -report"
+        } 
+    }
     stage(' Unit Testing') {
             steps {
                 sh """
