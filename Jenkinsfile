@@ -17,4 +17,5 @@ pipeline{
 
    stage(‘Deploy’) {
    }
+  }
 }
