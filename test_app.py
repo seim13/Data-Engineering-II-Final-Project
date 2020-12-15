@@ -1,16 +1,22 @@
 import unittest
 import os
 import requests
+from app import app 
 
 class FlaskTests(unittest.TestCase):
+
+	def setUp(self):
+		os.environ['NO_PROXY'] = '0.0.0.0'
+	
 		
 	def tearDown(self):
 		pass
 	
 	
-	def test_a_index(self):
-		responce = requests.get('http://127.0.0.1:5000/')
+	def test_server_is_up(self):
+		responce = requests.get('http://localhost:5000')
 		self.assertEqual(responce.status_code, 200)
-		
-if __name__ == '__main__':
-	unittest.main()	
+	  
+	  
+	if __name__ == '__main__':
+		unittest.main()	
