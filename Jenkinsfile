@@ -67,8 +67,7 @@ pipeline{
     stage('Stop Containers') {
         steps {
           script{
-              
-          else if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
+            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
             echo 'Stopping Containers '
             sh 'docker rm -f myflaskapp'
             sh 'docker rmi myflaskapp'
