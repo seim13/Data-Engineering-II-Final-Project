@@ -4,10 +4,10 @@ pipeline{
     stage('Build Flask Docker Image'){
       steps {
         script{
-if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+          if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
             sh 'docker build -t myflaskapp .' 
           }
-else if(env.BRANCH_NAME == 'master'){
+          else if(env.BRANCH_NAME == 'master'){
               echo 'master stuff for build'
           }
         } 
@@ -18,7 +18,7 @@ else if(env.BRANCH_NAME == 'master'){
           stage('Run Flask app') {
             steps {
               script{
-if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+                if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
                   echo 'Running Flask app'
                   sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
                 }
@@ -30,8 +30,8 @@ if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
     stage ('Testing'){
         steps{
             script{
-if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
-//sh 'python test_app.py
+                if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
+                    //sh 'python test_app.py
                   echo 'test unit running'
                 }
             }
@@ -40,7 +40,7 @@ if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
     stage ('Release'){
         steps{
             script{
-if(env.BRANCH_NAME == 'release'){
+                if(env.BRANCH_NAME == 'release'){
                     echo 'deploy for staging environment'
                 }
             }
@@ -49,7 +49,7 @@ if(env.BRANCH_NAME == 'release'){
     stage ('Acceptance Test'){
         steps{
             script{
-if(env.BRANCH_NAME == 'release'){
+                if(env.BRANCH_NAME == 'release'){
                     input 'proceed with deployement ?'
                 }
             }
@@ -58,11 +58,11 @@ if(env.BRANCH_NAME == 'release'){
     stage ('Merging to master'){
         steps{
             script{
-if(env.BRANCH_NAME == 'release'){
+                if(env.BRANCH_NAME == 'release'){
                   sh 'git fetch --all'
-                  sh 'git checkout master'
+                  sh 'git checkout main'
                   sh 'git checkout release'
-                  sh 'git merge master'
+                  sh 'git merge main'
                 }
             }
         }
@@ -70,10 +70,11 @@ if(env.BRANCH_NAME == 'release'){
     stage('Stop Containers') {
         steps {
           script{
-if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
+            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
             echo 'Stopping Containers '
             sh 'docker rm -f myflaskapp'
             sh 'docker rmi myflaskapp'
+            
           }
         }
       }
