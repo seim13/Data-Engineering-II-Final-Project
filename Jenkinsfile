@@ -59,10 +59,11 @@ pipeline{
         steps{
             script{
                 if(env.BRANCH_NAME == 'release'){
-                  sh 'git fetch --all'
-                  sh 'git pull'
-                  sh 'git checkout release'
-                  sh 'git merge main'
+                  //sh 'git fetch --all'
+                  //sh 'git pull'
+                  //sh 'git checkout release'
+                  //sh 'git merge main'
+                  echo "automatic merging is anable by you"
                 }
             }
         }
