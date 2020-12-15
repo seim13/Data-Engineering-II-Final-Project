@@ -4,10 +4,10 @@ pipeline{
     stage('Build Flask Docker Image'){
       steps {
         script{
-          if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
             sh 'docker build -t myflaskapp .' 
           }
-          else if(env.BRANCH_NAME == 'master'){
+else if(env.BRANCH_NAME == 'master'){
               echo 'master stuff for build'
           }
         } 
@@ -18,7 +18,7 @@ pipeline{
           stage('Run Flask app') {
             steps {
               script{
-                if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
                   echo 'Running Flask app'
                   sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
                 }
@@ -30,8 +30,8 @@ pipeline{
     stage ('Testing'){
         steps{
             script{
-                if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
-                    //sh 'python test_app.py
+if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
+//sh 'python test_app.py
                   echo 'test unit running'
                 }
             }
@@ -40,7 +40,7 @@ pipeline{
     stage ('Release'){
         steps{
             script{
-                if(env.BRANCH_NAME == 'release'){
+if(env.BRANCH_NAME == 'release'){
                     echo 'deploy for staging environment'
                 }
             }
@@ -49,7 +49,7 @@ pipeline{
     stage ('Acceptance Test'){
         steps{
             script{
-                if(env.BRANCH_NAME == 'release'){
+if(env.BRANCH_NAME == 'release'){
                     input 'proceed with deployement ?'
                 }
             }
@@ -58,8 +58,11 @@ pipeline{
     stage ('Merging to master'){
         steps{
             script{
-                if(env.BRANCH_NAME == 'release'){
-                    echo 'merging to master'
+if(env.BRANCH_NAME == 'release'){
+                  sh 'git fetch --all'
+                  sh 'git checkout master'
+                  sh 'git checkout release'
+                  sh 'git merge master'
                 }
             }
         }
@@ -67,11 +70,10 @@ pipeline{
     stage('Stop Containers') {
         steps {
           script{
-            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
+if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
             echo 'Stopping Containers '
             sh 'docker rm -f myflaskapp'
             sh 'docker rmi myflaskapp'
-            
           }
         }
       }
