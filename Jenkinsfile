@@ -60,7 +60,7 @@ pipeline{
             script{
                 if(env.BRANCH_NAME == 'release'){
                   sh 'git fetch --all'
-                  sh 'git checkout main'
+                  sh 'git pull'
                   sh 'git checkout release'
                   sh 'git merge main'
                 }
