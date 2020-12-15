@@ -31,7 +31,7 @@ pipeline{
         steps{
             script{
                 if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'develop'){
-                   sh 'python test_app.py
+                   sh 'python test_app.py'
             
                 }
             }
