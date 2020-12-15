@@ -30,7 +30,7 @@ pipeline{
     stage ('Testing'){
         steps{
             script{
-                if(env.BRANCH_NAME == 'release'){
+                if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'WordEmbedingModel'){
                     //sh 'python test_app.py
                   echo 'test unit running'
                 }
