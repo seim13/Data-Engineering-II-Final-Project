@@ -7,8 +7,6 @@ pipeline{
             echo 'run flask app'
           }
         }
-      }
-    }
     stage('Testing'){
       steps{
         //sh 'python test_app.py'
