@@ -1,5 +1,8 @@
 pipeline{
-  agent any
+ 
+  agent{
+     label 'docker'
+  }
   stages{
     stage('Build Flask Docker Image'){
       steps {
