@@ -1,9 +1,0 @@
-execution:
-- concurrency: 5
-  throughput: 3 
-  ramp-up: 30s
-  hold-for: 1m
-  scenario:
-    requests:
-    - http://127.0.0.1:5000/
-    
