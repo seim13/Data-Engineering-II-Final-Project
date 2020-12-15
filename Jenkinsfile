@@ -62,7 +62,6 @@ pipeline{
                   sh 'git fetch --all'
                   sh 'git pull'
                   sh 'git checkout release'
-                  sh 'git fetch remote-main'
                   sh 'git merge main'
                 }
             }
