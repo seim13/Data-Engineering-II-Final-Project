@@ -5,7 +5,7 @@ pipeline{
       steps {
         script{
           if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
-            sh "docker build -t myflaskapp ."
+            sh 'docker sm'
           }
         } 
       }
