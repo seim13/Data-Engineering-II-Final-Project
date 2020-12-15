@@ -7,9 +7,6 @@ pipeline{
           if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
             sh 'docker build -t myflaskapp .' 
           }
-          else if(env.BRANCH_NAME == 'master'){
-              echo 'master stuff for build'
-          }
         } 
       }
     }
@@ -31,8 +28,7 @@ pipeline{
         steps{
             script{
                 if(env.BRANCH_NAME == 'release'|| env.BRANCH_NAME == 'develop'){
-                   //sh 'python test_app.py'
-                   echo 'test'
+                   sh 'python test_app.py'
                  
                 }
             }
