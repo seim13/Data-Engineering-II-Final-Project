@@ -1,34 +1,79 @@
 pipeline{
   agent any
-  stages {
-    stage('Build Flask app'){
-      steps{
-        //sh 'docker build -t myflaskapp .'
-        echo 'run docker'
+  stages{
+    stage('Build Flask Docker Image'){
+      steps {
+        script{
+          if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+            sh 'docker build -t myflaskapp .' 
+          }
+          else if(env.BRANCH_NAME == 'master'){
+              echo 'master stuff for build'
+          }
+        } 
       }
     }
-    stage('Run docker images'){
-      parallel{
-        stage('Run Redis'){
-          steps{
-            //sh 'docker run -d -p 6379:6379 --name redis redis:alpine'
-      echo 'run redis'
+    stage('build service images'){
+        parallel{
+          stage('Run Flask app') {
+            steps {
+              script{
+                if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+                  echo 'Running Flask app'
+                  sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
+                }
+              }
+            }
           }
         }
-        stage('Run Flask App'){
-          steps{
-            //sh 'docker run -d -p 5000:5000 --name myflaskapp_c myflaskapp'
-      echo 'run flask app'
-          }
-        }
-      }
     }
-    stage('Docker images down'){
-      steps{
-        //sh 'docker rm -f redis'
-        //sh 'docker rm -f myflaskapp_c'
-        //sh 'docker rmi -f myflaskapp'
-        echo 'docker down'
+    stage ('Testing'){
+        steps{
+            script{
+                if(env.BRANCH_NAME == 'release'){
+                    sh 'python test_app.py
+                }
+            }
+        }
+    }
+    stage ('Release'){
+        steps{
+            script{
+                if(env.BRANCH_NAME == 'release'){
+                    echo 'deploy for staging environment'
+                }
+            }
+        }
+    }
+    stage ('Acceptance Test'){
+        steps{
+            script{
+                if(env.BRANCH_NAME == 'release'){
+                    input 'proceed with deployement ?'
+                }
+            }
+        }
+    }
+    stage ('Merging to master'){
+        steps{
+            script{
+                if(env.BRANCH_NAME == 'release'){
+                    echo 'merging to master'
+                }
+            }
+        }
+    }
+    stage('Stop Containers') {
+        steps {
+          script{
+              
+          else if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
+            echo 'Stopping Containers '
+            sh 'docker rm -f myflaskapp'
+            sh 'docker rmi myflaskapp'
+            
+          }
+        }
       }
     }
   }
