@@ -7,3 +7,6 @@ keras
 gensim
 sklearn
 scipy
+prometheus_flask_exporter import PrometheusMetrics
+prometheus_client import Counter, Gauge, Summary, Histogram
+flask_prometheus_metrics
